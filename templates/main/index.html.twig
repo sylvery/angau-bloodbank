@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Home {{ parent() }} {% endblock %}
 
 {% block body %}
 <div class="jumbotron">
-    <h1 class="display-3">Welcome</h1>
-    <p class="lead">Papua New Guinea Royal Constabulary</p>
+    <h1 class="display-3">ANGAU BLOODBANK</h1>
+    <p class="lead">Welcome to the ANGAU Memorial Hospital bloodbank database.</p>
     <hr class="my-2">
-    <p>Occurence Book Web Application</p>
+    <p>Please login with an authorized username and password. Click on the button below to get started.</p>
     <p class="lead">
-        <a class="btn btn-primary btn-lg" href="{{path('appuser_index')}}" role="button">Login to continue</a>
+        <a class="btn btn-primary btn-lg" href="{{path('app_login')}}" role="button">Login to continue</a>
     </p>
 </div>
 {% endblock %}

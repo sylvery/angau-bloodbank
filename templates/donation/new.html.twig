@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Donation {{parent()}}{% endblock %}
+
+{% block body %}
+<div class="col">
+    <h1>Create new Donation</h1>
+    
+    {{ include('donation/_form.html.twig') }}
+    
+    <a href="{{ path('donation_index') }}">back to list</a>
+    
+</div>
+{% endblock %}

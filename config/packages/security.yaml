@@ -9,7 +9,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\Appuser
-                property: badgenumber
+                property: employeeCode
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

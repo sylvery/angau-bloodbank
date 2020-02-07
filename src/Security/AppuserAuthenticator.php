@@ -46,13 +46,13 @@ class AppuserAuthenticator extends AbstractFormLoginAuthenticator implements Pas
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'badgenumber' => $request->request->get('badgenumber'),
+            'employeeCode' => $request->request->get('employeeCode'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['badgenumber']
+            $credentials['employeeCode']
         );
 
         return $credentials;
@@ -65,11 +65,11 @@ class AppuserAuthenticator extends AbstractFormLoginAuthenticator implements Pas
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(Appuser::class)->findOneBy(['badgenumber' => $credentials['badgenumber']]);
+        $user = $this->entityManager->getRepository(Appuser::class)->findOneBy(['employeeCode' => $credentials['employeeCode']]);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Badgenumber could not be found.');
+            throw new CustomUserMessageAuthenticationException('Employee code could not be found.');
         }
 
         return $user;

@@ -2,26 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Appuser;
+use App\Entity\Donation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AppuserType extends AbstractType
+class DonationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('employeeCode')
-            // ->add('roles')
-            ->add('password')
+            ->add('date')
+            ->add('location')
+            ->add('donor')
+            ->add('volume')
+            ->add('bags')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Appuser::class,
+            'data_class' => Donation::class,
         ]);
     }
 }

@@ -1,19 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Appuser{% endblock %}
+{% block title %}Employee Details {{parent()}}{% endblock %}
 
 {% block body %}
-    <h1>Appuser</h1>
-
-    <table class="table">
+<div class="col-9">
+    <h1>Employee Details</h1>
+    <table class="table table-sm table-striped">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ appuser.id }}</td>
-            </tr>
-            <tr>
-                <th>Badgenumber</th>
-                <td>{{ appuser.badgenumber }}</td>
+                <th>Employee Code</th>
+                <td>{{ appuser.employeeCode }}</td>
             </tr>
             <tr>
                 <th>Roles</th>
@@ -25,10 +21,12 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('appuser_index') }}">back to list</a>
-
-    <a href="{{ path('appuser_edit', {'id': appuser.id}) }}">edit</a>
-
-    {{ include('appuser/_delete_form.html.twig') }}
+</div>
+<div class="col-3">
+    <div class="btn-group">
+        <a class="btn btn-default btn-sm" role="button" href="{{path('appuser_index') }}">back to list</a>
+        <a class="btn btn-info btn-sm" role="button" href="{{path('appuser_edit', {'id': appuser.id}) }}">edit</a>
+        {{ include('appuser/_delete_form.html.twig') }}
+    </div>
+</div>
 {% endblock %}

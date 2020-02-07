@@ -20,7 +20,7 @@ class Appuser implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $badgenumber;
+    private $employeeCode;
 
     /**
      * @ORM\Column(type="json")
@@ -38,14 +38,14 @@ class Appuser implements UserInterface
         return $this->id;
     }
 
-    public function getBadgenumber(): ?string
+    public function getEmployeeCode(): ?string
     {
-        return $this->badgenumber;
+        return $this->employeeCode;
     }
 
-    public function setBadgenumber(string $badgenumber): self
+    public function setEmployeeCode(string $employeeCode): self
     {
-        $this->badgenumber = $badgenumber;
+        $this->employeeCode = $employeeCode;
 
         return $this;
     }
@@ -57,7 +57,7 @@ class Appuser implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->badgenumber;
+        return (string) $this->employeeCode;
     }
 
     /**

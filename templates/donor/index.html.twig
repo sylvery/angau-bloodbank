@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blood Donors{% endblock %}
+
+{% block body %}
+    <div class="col">
+        <h1>Blood Donors</h1>
+    
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>FirstName</th>
+                    <th>MiddleName</th>
+                    <th>LastName</th>
+                    <th>Dob</th>
+                    <th>Gender</th>
+                    <th>MaritalStatus</th>
+                    <th>BloodType</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for donor in donors %}
+                <tr>
+                    <td>{{ donor.id }}</td>
+                    <td>{{ donor.firstName }}</td>
+                    <td>{{ donor.middleName }}</td>
+                    <td>{{ donor.lastName }}</td>
+                    <td>{{ donor.dob ? donor.dob|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ donor.gender }}</td>
+                    <td>{{ donor.maritalStatus }}</td>
+                    <td>{{ donor.bloodType }}</td>
+                    <td>
+                        <a href="{{ path('donor_show', {'id': donor.id}) }}">show</a>
+                        <a href="{{ path('donor_edit', {'id': donor.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    
+        <a href="{{ path('donor_new') }}">Create new</a>
+    </div>
+{% endblock %}

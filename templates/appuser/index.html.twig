@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Appuser index{% endblock %}
+{% block title %}Employees {{parent()}}{% endblock %}
 
 {% block body %}
     <div class="col-12">
-        <h1>Users</h1>
+        <h1>Employees</h1>
 
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
-                    <th>Badgenumber</th>
+                    <th>Employee Code</th>
                     <th>Roles</th>
                     <th>Password</th>
                     <th>actions</th>
@@ -18,7 +18,7 @@
             <tbody>
             {% for appuser in appusers %}
                 <tr>
-                    <td>{{ appuser.badgenumber }}</td>
+                    <td>{{ appuser.employeeCode }}</td>
                     <td>{{ appuser.roles ? appuser.roles|json_encode : '' }}</td>
                     <td>{{ appuser.password }}</td>
                     <td class="btn-group">
