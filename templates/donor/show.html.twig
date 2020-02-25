@@ -3,36 +3,45 @@
 {% block title %}Donor{% endblock %}
 
 {% block body %}
-    <div class="col-9">
-        <h1>Donor</h1>
-        <table class="table table-striped">
+    {{ include('main/page-title.html.twig', {
+        'pagetitle': 'Donor Details',
+        'subtitle': donor.fullname,
+        'actions': [
+            {
+                'name': 'donor_index',
+                'class': 'primary',
+                'label': 'donors list',
+                'id': donor.id
+            },{
+                'name': 'donor_new',
+                'class': 'success',
+                'label': 'add donor',
+                'id': donor.id,
+            },{
+                'name': 'donor_edit',
+                'class': 'warning',
+                'label': 'update details',
+                'id': donor.id,
+            }
+        ]
+    })}}
+    <div class="col-md-8">
+        <table class="table table-striped table-sm">
             <tbody>
                 <tr>
-                    <th>FirstName</th>
-                    <td>{{ donor.firstName }}</td>
-                </tr>
-                <tr>
-                    <th>MiddleName</th>
-                    <td>{{ donor.middleName }}</td>
-                </tr>
-                <tr>
-                    <th>LastName</th>
-                    <td>{{ donor.lastName }}</td>
-                </tr>
-                <tr>
-                    <th>Dob</th>
-                    <td>{{ donor.dob ? donor.dob|date('Y-m-d H:i:s') : '' }}</td>
+                    <th>Date of Birth</th>
+                    <td>{{ donor.dob ? donor.dob|date('D F j, Y') : '' }}</td>
                 </tr>
                 <tr>
                     <th>Gender</th>
                     <td>{{ donor.gender }}</td>
                 </tr>
                 <tr>
-                    <th>MaritalStatus</th>
+                    <th>Marital Status</th>
                     <td>{{ donor.maritalStatus }}</td>
                 </tr>
                 <tr>
-                    <th>BloodType</th>
+                    <th>Blood Type</th>
                     <td>{{ donor.bloodType }}</td>
                 </tr>
                 <tr>
@@ -43,25 +52,17 @@
         </table>
     </div>
     <div class="col">
-        <div class="row">
-            <div class="col">
-                <div class="btn-group btn-sm">
-                    <a class="btn btn-sm btn-info" role="button" href="{{ path('donor_index') }}">back to list</a>
-                    <a class="btn btn-sm btn-warning" role="button" href="{{ path('donor_edit', {'id': donor.id}) }}">edit</a>
-                    {{ include('donor/_delete_form.html.twig') }}
-                </div>
-            </div>
+        <p class="lead text-secondary">Donation History</p>
+        {% if donor.donations is defined %}
+        <div class="list-group">
+            {% for donation in donor.donations %}
+                <a href="{{path('donation_show',{id: donation.id})}}" class="text-center list-group-item">{{donation.location}} - {{donation.bags}} blood bags</a>
+            {% endfor %}
         </div>
-        <div class="row">
-            <div class="col">
-                <p class="lead">Donation History</p>
-                <div class="list-group">
-                    {% for donation in donor.donations %}
-                        <a href="{{path('donation_show',{id: donation.id})}}" class="list-group-item">{{donation.location}} - {{donation.bags}} blood bags</a>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+        {% else %}
+        <p class="text-danger"><em>No donations found</em></p>
+        {% endif %}
+        <a href="{{path('donation_new')}}" class="btn btn-outline-success btn-block" role="button">register donation</a>
     </div>
 </div>
 {% endblock %}

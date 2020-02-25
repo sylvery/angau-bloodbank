@@ -3,11 +3,32 @@
 {% block title %}Edit Donation{% endblock %}
 
 {% block body %}
-    <h1>Edit Donation</h1>
-
-    {{ include('donation/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('donation_index') }}">back to list</a>
-
-    {{ include('donation/_delete_form.html.twig') }}
+    {{ include('main/page-title.html.twig', {
+        'pagetitle': 'Update Donation',
+        'subtitle': 'Update this donation by filling out the form below',
+        'actions': [
+            {
+                'name': 'donation_index',
+                'class': 'primary',
+                'label': 'back to donations',
+                'id': donation.id
+            },{
+                'name': 'donation_show',
+                'class': 'warning',
+                'label': 'cancel update',
+                'id': donation.id
+            },{
+                'name': 'donation_new',
+                'class': 'success',
+                'label': 'add new donation',
+                'id': donation.id
+            }
+        ]
+    })}}
+    <div class="col-sm">
+        {{ include('donation/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+    <div class="col-sm">
+        {{ include('main/workflow-status.html.twig', {currentPlace: donation.currentPlace})}}
+    </div>
 {% endblock %}

@@ -1,0 +1,6 @@
+<p class="lead">
+    {{currentPlace ? currentPlace : 'Workflow Status Message'}}
+</p>
+{% if currentPlace %}
+<p>This donation is currently undergoing {{currentPlace}} </p>
+{% endif %}

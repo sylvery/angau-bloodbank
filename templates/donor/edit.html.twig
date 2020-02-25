@@ -3,11 +3,42 @@
 {% block title %}Edit Donor{% endblock %}
 
 {% block body %}
-    <h1>Edit Donor</h1>
-
-    {{ include('donor/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('donor_index') }}">back to list</a>
-
-    {{ include('donor/_delete_form.html.twig') }}
+    {{ include('main/page-title.html.twig', {
+        'pagetitle': 'Update Donor',
+        'subtitle': donor.fullname,
+        'actions': [
+            {
+                'name': 'donor_index',
+                'class': 'primary',
+                'label': 'donors list',
+                'id': donor.id
+            },{
+                'name': 'donor_show',
+                'class': 'info',
+                'label': 'cancel update',
+                'id': donor.id
+            },{
+                'name': 'donor_new',
+                'class': 'success',
+                'label': 'add donor',
+                'id': donor.id
+            }
+        ]
+    })}}
+    <div class="col-12">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-sm-4">{{ form_row(form.firstName) }}</div>
+            <div class="col-sm-4">{{ form_row(form.middleName) }}</div>
+            <div class="col-sm-4">{{ form_row(form.lastName) }}</div>
+        </div>
+        <div class="row">
+            <div class="col">{{ form_row(form.dob) }}</div>
+            <div class="col">{{ form_row(form.gender) }}</div>
+            <div class="col">{{ form_row(form.maritalStatus) }}</div>
+            <div class="col">{{ form_row(form.bloodType) }}</div>
+        </div>
+        <button class="btn btn-success">Update</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

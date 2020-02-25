@@ -3,23 +3,36 @@
 {% block title %}Donations {{parent()}}{% endblock %}
 
 {% block body %}
+{{ include('main/page-title.html.twig', {
+    'pagetitle': 'Donations Registry',
+    'subtitle': 'A tabuluated list of all donations registered in the system',
+    'actions': [
+        {
+            'name': 'donation_new',
+            'class': 'success',
+            'label': 'add new donation',
+            'id': donations ? 1 : donation.id
+        }
+    ]
+})}}
 <div class="col">
-    <h1>Donations</h1>
     <table class="table table-sm table-striped">
         <thead>
             <tr>
                 <th>Date</th>
                 <th>Location</th>
                 <th>Blood Bags</th>
+                <th>Status</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for donation in donations %}
             <tr>
-                <td>{{ donation.date ? donation.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ donation.date ? donation.date|date('D d F, Y') : '' }}</td>
                 <td>{{ donation.location }}</td>
                 <td>{{ donation.bags }}</td>
+                <td>{{ donation.currentPlace }}</td>
                 <td class="btn-group">
                     <a class="btn btn-info btn-sm" role="button" href="{{ path('donation_show', {'id': donation.id}) }}">show</a>
                     <a class="btn btn-warning btn-sm" role="button" href="{{ path('donation_edit', {'id': donation.id}) }}">edit</a>
@@ -32,6 +45,5 @@
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-outline-primary btn-sm" role="button" href="{{ path('donation_new') }}">Create new</a>
 </div>
 {% endblock %}

@@ -1,0 +1,41 @@
+framework:
+    workflows:
+        donation:
+            type: 'workflow'
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: 'single_state'
+                arguments:
+                    - 'currentPlace'
+            supports:
+                - App\Entity\Donation
+            initial_place: draft
+            places:
+                - draft
+                - physical_checks
+                - blood_collection
+                - blood_tests
+                - save_bank
+                - discard
+                - terminate
+            transitions:
+                to_physical_checks:
+                    # guard: is_authenticated
+                    from: draft
+                    to:   physical_checks
+                to_blood_collection:
+                    from: physical_checks
+                    to: blood_collection
+                to_blood_tests:
+                    from: blood_collection
+                    to: blood_tests
+                to_save_bank:
+                    from: blood_tests
+                    to: save_bank
+                to_discard:
+                    from: blood_tests
+                    to: discard
+                to_terminate:
+                    from: [physical_checks, blood_tests]
+                    to: terminate

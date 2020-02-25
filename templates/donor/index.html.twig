@@ -3,16 +3,24 @@
 {% block title %}Blood Donors{% endblock %}
 
 {% block body %}
+    {{ include('main/page-title.html.twig', {
+        'pagetitle': 'Blood Donor Accounts',
+        'subtitle': 'A tabulated list showing all blood donors registered in the system',
+        'actions': [
+            {
+                'name': 'donor_new',
+                'class': 'success',
+                'label': 'add donor',
+                'id': 0
+            }
+        ]
+    })}}
+
     <div class="col">
-        <h1>Blood Donors</h1>
-    
-        <table class="table">
+        <table class="table table-sm table-striped">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>FirstName</th>
-                    <th>MiddleName</th>
-                    <th>LastName</th>
+                    <th>Name</th>
                     <th>Dob</th>
                     <th>Gender</th>
                     <th>MaritalStatus</th>
@@ -23,17 +31,14 @@
             <tbody>
             {% for donor in donors %}
                 <tr>
-                    <td>{{ donor.id }}</td>
-                    <td>{{ donor.firstName }}</td>
-                    <td>{{ donor.middleName }}</td>
-                    <td>{{ donor.lastName }}</td>
-                    <td>{{ donor.dob ? donor.dob|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ donor.fullName }}</td>
+                    <td>{{ donor.dob ? donor.dob|date('d/m/Y') : '' }}</td>
                     <td>{{ donor.gender }}</td>
                     <td>{{ donor.maritalStatus }}</td>
                     <td>{{ donor.bloodType }}</td>
-                    <td>
-                        <a href="{{ path('donor_show', {'id': donor.id}) }}">show</a>
-                        <a href="{{ path('donor_edit', {'id': donor.id}) }}">edit</a>
+                    <td class="btn-group">
+                        <a class="btn btn-info btn-sm" role="button" href="{{ path('donor_show', {'id': donor.id}) }}">show</a>
+                        <a class="btn btn-warning btn-sm" role="button" href="{{ path('donor_edit', {'id': donor.id}) }}">edit</a>
                     </td>
                 </tr>
             {% else %}
@@ -43,7 +48,5 @@
             {% endfor %}
             </tbody>
         </table>
-    
-        <a href="{{ path('donor_new') }}">Create new</a>
     </div>
 {% endblock %}

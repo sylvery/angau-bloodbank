@@ -70,7 +70,7 @@ class Donor
 
     public function getFullName()
     {
-        return $this->getFirstName().' '.$this->getLastName();
+        return $this->getFirstName().' '.$this->getMiddleName().' '.$this->getLastName();
     }
 
     public function getId(): ?int
@@ -124,6 +124,11 @@ class Donor
         $this->dob = $dob;
 
         return $this;
+    }
+
+    public function getDonorAge()
+    {
+        return date_diff($this->getDob(), new \DateTime('now'));
     }
 
     public function getGender(): ?string
