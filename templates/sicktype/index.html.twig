@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sicktype index{% endblock %}
+
+{% block body %}
+    <h1>Sicktype index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sicktype in sicktypes %}
+            <tr>
+                <td>{{ sicktype.id }}</td>
+                <td>{{ sicktype.name }}</td>
+                <td>
+                    <a href="{{ path('sicktype_show', {'id': sicktype.id}) }}">show</a>
+                    <a href="{{ path('sicktype_edit', {'id': sicktype.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('sicktype_new') }}">Create new</a>
+{% endblock %}

@@ -80,7 +80,9 @@ class DonationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $workflow = $this->workflow->get($donation);
-            if ($workflow->can($donation, 'to_blood_collection')) {
+            if ($workflow->can($donation, 'to_physical_checks')) {
+                // $workflow->apply($donation, 'to_physical_checks');
+            } else if ($workflow->can($donation, 'to_blood_collection')) {
                 $workflow->apply($donation, 'to_blood_collection');
             } else if ($workflow->can($donation, 'to_blood_tests')) {
                 $workflow->apply($donation, 'to_blood_tests');

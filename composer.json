@@ -27,6 +27,7 @@
         "symfony/twig-pack": "*",
         "symfony/validator": "*",
         "symfony/web-link": "*",
+        "symfony/workflow": "4.4.*",
         "symfony/yaml": "*"
     },
     "require-dev": {

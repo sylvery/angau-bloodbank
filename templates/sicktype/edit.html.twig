@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Sicktype{% endblock %}
+
+{% block body %}
+    <h1>Edit Sicktype</h1>
+
+    {{ include('sicktype/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('sicktype_index') }}">back to list</a>
+
+    {{ include('sicktype/_delete_form.html.twig') }}
+{% endblock %}

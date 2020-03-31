@@ -21,11 +21,11 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Dob</th>
+                    <th>D.O.B</th>
                     <th>Gender</th>
-                    <th>MaritalStatus</th>
                     <th>BloodType</th>
-                    <th>actions</th>
+                    <th>Donations</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,8 +34,8 @@
                     <td>{{ donor.fullName }}</td>
                     <td>{{ donor.dob ? donor.dob|date('d/m/Y') : '' }}</td>
                     <td>{{ donor.gender }}</td>
-                    <td>{{ donor.maritalStatus }}</td>
                     <td>{{ donor.bloodType }}</td>
+                    <td>{{ donor.donations.count }}</td>
                     <td class="btn-group">
                         <a class="btn btn-info btn-sm" role="button" href="{{ path('donor_show', {'id': donor.id}) }}">show</a>
                         <a class="btn btn-warning btn-sm" role="button" href="{{ path('donor_edit', {'id': donor.id}) }}">edit</a>

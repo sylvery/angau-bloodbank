@@ -6,11 +6,11 @@
         {% include 'misc/stylesheets.html.twig' %}
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
+    <body class="bg-dark text-light">
         {% include 'misc/mainNav.html.twig' %}
         <div class="container-fluid">
-            <div class="container" id="content">
-                <div class="row" id="content">
+            <div class="container" id="content-container">
+                <div class="row" id="content-container-row">
                     {% block body %}{% endblock %}
                 </div>
                 <div class="row" id="footer"></div>

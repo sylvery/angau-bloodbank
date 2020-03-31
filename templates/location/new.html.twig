@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Location{% endblock %}
+
+{% block body %}
+{{ include('main/page-title.html.twig', {
+    'pagetitle': 'New Location',
+    'subtitle': 'Add a new location which is not already registered in the system.',
+    'actions': [
+        {
+            'name': 'location_new',
+            'class': 'success border-warning',
+            'label': 'add new location',
+            'id': location.id
+        }
+    ]
+})}}
+<div class="row">
+    {{ include('location/_form.html.twig') }}
+</div>
+{% endblock %}

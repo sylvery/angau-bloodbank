@@ -30,5 +30,14 @@
     </div>
     <div class="col-sm">
         {{ include('main/workflow-status.html.twig', {currentPlace: donation.currentPlace})}}
+        <div class="card text-white bg-info">
+          <div class="card-body">
+            <h4 class="card-title lead">{{donation.donor.fullname}}</h4>
+            <div class="card-text">
+                <p><span class="text-dark small">Age:</span> {{donation.donor.getDonorAge ? donation.donor.getDonorAge.y~' years old' : '' }}</p>
+                <p><span class="text-dark small">Blood Type: </span>{{donation.donor.bloodtype}}</p>
+            </div>
+          </div>
+        </div>
     </div>
 {% endblock %}

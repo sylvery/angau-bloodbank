@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200202151720 extends AbstractMigration
+final class Version20200322143247 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,10 +22,9 @@ final class Version20200202151720 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE donor (id INT AUTO_INCREMENT NOT NULL, first_name VARCHAR(255) NOT NULL, middle_name VARCHAR(255) DEFAULT NULL, last_name VARCHAR(255) NOT NULL, dob DATETIME NOT NULL, gender VARCHAR(255) NOT NULL, marital_status VARCHAR(255) NOT NULL, blood_type VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE donation ADD donor_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE donation ADD CONSTRAINT FK_31E581A03DD7B7A7 FOREIGN KEY (donor_id) REFERENCES donor (id)');
-        $this->addSql('CREATE INDEX IDX_31E581A03DD7B7A7 ON donation (donor_id)');
+        $this->addSql('ALTER TABLE donation ADD CONSTRAINT FK_31E581A088823A92 FOREIGN KEY (locality_id) REFERENCES location (id)');
+        $this->addSql('ALTER TABLE sicktype ADD CONSTRAINT FK_94CBF3B14DC1279C FOREIGN KEY (donation_id) REFERENCES donation (id)');
     }
 
     public function down(Schema $schema) : void
@@ -34,8 +33,7 @@ final class Version20200202151720 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE donation DROP FOREIGN KEY FK_31E581A03DD7B7A7');
-        $this->addSql('DROP TABLE donor');
-        $this->addSql('DROP INDEX IDX_31E581A03DD7B7A7 ON donation');
-        $this->addSql('ALTER TABLE donation DROP donor_id');
+        $this->addSql('ALTER TABLE donation DROP FOREIGN KEY FK_31E581A088823A92');
+        $this->addSql('ALTER TABLE sicktype DROP FOREIGN KEY FK_94CBF3B14DC1279C');
     }
 }

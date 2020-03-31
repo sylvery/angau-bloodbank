@@ -9,7 +9,7 @@
     'actions': [
         {
             'name': 'donation_new',
-            'class': 'success',
+            'class': 'success border-warning',
             'label': 'add new donation',
             'id': donations ? 1 : donation.id
         }
@@ -22,6 +22,7 @@
                 <th>Date</th>
                 <th>Location</th>
                 <th>Blood Bags</th>
+                <th>Donor</th>
                 <th>Status</th>
                 <th>actions</th>
             </tr>
@@ -30,11 +31,12 @@
         {% for donation in donations %}
             <tr>
                 <td>{{ donation.date ? donation.date|date('D d F, Y') : '' }}</td>
-                <td>{{ donation.location }}</td>
+                <td>{{ donation.locality }}</td>
                 <td>{{ donation.bags }}</td>
+                <td><a class="btn btn-block btn-outline-info" href="{{path('donor_show', {'id': donation.donor.id})}}">{{ donation.donor.fullname }}<a/></td>
                 <td>{{ donation.currentPlace }}</td>
                 <td class="btn-group">
-                    <a class="btn btn-info btn-sm" role="button" href="{{ path('donation_show', {'id': donation.id}) }}">show</a>
+                    <a class="btn btn-info btn-sm" role="button" href="{{ path('donation_show', {'id': donation.id}) }}">view</a>
                     <a class="btn btn-warning btn-sm" role="button" href="{{ path('donation_edit', {'id': donation.id}) }}">edit</a>
                 </td>
             </tr>

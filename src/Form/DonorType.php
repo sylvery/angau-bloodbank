@@ -28,6 +28,7 @@ class DonorType extends AbstractType
                 'label_attr' => ['class'=>'sr-only'],
                 'help_attr' => ['class'=>'text-muted sm'],
                 'attr' => ['class' => 'form-control'],
+                'required' => false,
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Last Name',

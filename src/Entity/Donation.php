@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,11 +22,6 @@ class Donation
      * @ORM\Column(type="datetime")
      */
     private $date;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $location;
 
     /**
      * @ORM\Column(type="float", length=255, nullable=true)
@@ -81,6 +78,21 @@ class Donation
      */
     private $whatSick;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sicktype", mappedBy="donation")
+     */
+    private $sicknesses;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="locality")
+     */
+    private $locality;
+
+    public function __construct()
+    {
+        $this->sicknesses = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -94,18 +106,6 @@ class Donation
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getLocation(): ?string
-    {
-        return $this->location;
-    }
-
-    public function setLocation(string $location): self
-    {
-        $this->location = $location;
 
         return $this;
     }
@@ -238,6 +238,49 @@ class Donation
     public function setCovid19(?bool $covid19): self
     {
         $this->covid19 = $covid19;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sicktype[]
+     */
+    public function getSicknesses(): Collection
+    {
+        return $this->sicknesses;
+    }
+
+    public function addSickness(Sicktype $sickness): self
+    {
+        if (!$this->sicknesses->contains($sickness)) {
+            $this->sicknesses[] = $sickness;
+            $sickness->setDonation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSickness(Sicktype $sickness): self
+    {
+        if ($this->sicknesses->contains($sickness)) {
+            $this->sicknesses->removeElement($sickness);
+            // set the owning side to null (unless already changed)
+            if ($sickness->getDonation() === $this) {
+                $sickness->setDonation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLocality(): ?Location
+    {
+        return $this->locality;
+    }
+
+    public function setLocality(?Location $locality): self
+    {
+        $this->locality = $locality;
 
         return $this;
     }
