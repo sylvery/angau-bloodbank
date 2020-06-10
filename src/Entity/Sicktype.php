@@ -22,7 +22,7 @@ class Sicktype
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Donation", inversedBy="sicknesses")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Donation", inversedBy="serology")
      */
     private $donation;
 

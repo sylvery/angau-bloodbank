@@ -1,6 +1,6 @@
 security:
     encoders:
-        App\Entity\Appuser:
+        App\Entity\Employee:
             algorithm: auto
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
@@ -8,8 +8,9 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
-                class: App\Entity\Appuser
-                property: employeeCode
+                class: App\Entity\Employee
+                property: uuid
+        # used to reload user from session & other features (e.g. switch_user)
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -18,7 +19,8 @@ security:
             anonymous: lazy
             guard:
                 authenticators:
-                    - App\Security\AppuserAuthenticator
+                    - App\Security\EmployeeAuthenticator
+                entry_point: App\Security\EmployeeAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout

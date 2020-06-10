@@ -56,7 +56,7 @@
         {% if donor.donations is defined %}
         <div class="list-group">
             {% for donation in donor.donations %}
-                <a href="{{path('donation_show',{id: donation.id})}}" class="text-center list-group-item">{{donation.location}} - {{donation.bags}} blood bags</a>
+                <a href="{{path('donation_show',{id: donation.id})}}" class="text-center list-group-item">{{donation.locality}} - {{donation.bags}} blood bags</a>
             {% endfor %}
         </div>
         {% else %}

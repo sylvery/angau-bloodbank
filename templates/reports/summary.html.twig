@@ -3,13 +3,13 @@
         <div class="col-6">
             <p class="lead text-warning">Donation Summary Report</p>
             {% for donation in donations %}
-                <p>{{donation.location}} <span class="text-warning">{{donation.volume}}</span></p>
+                <a href="{{path('donation_show', {id: donation.id})}}">{{donation.locality}} <span class="text-warning">{{donation.volume}} mL</span></a></p>
             {% endfor %}
-            <a role="button" href="{{path('donation_index')}}" class="btn btn-info btn-outline-warning btn-sm">view donations</a>
+            <a role="button" href="{{path('donation_index')}}" class="btn btn-info btn-sm">view donations</a>
         </div>
         <div class="col-6">
             <p class="lead text-warning">Donor Summary Report</p>
-            <table class="table table-striped table-inverse table-responsive table-sm small">
+            <table class="table table-striped table-inverse table-sm">
                 <thead class="thead-inverse">
                     <tr>
                         <th>Donor</th>
@@ -19,13 +19,13 @@
                 <tbody>
                     {% for donor in donors %}
                         <tr>
-                            <td scope="row">{{donor.fullname}}</td>
+                            <td scope="row"><a href="{{path('donor_show', {id: donor.id})}}">{{donor.fullname}}</a></td>
                             <td>{{donor.donations.count}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>            
-            <a role="button" href="{{path('donor_index')}}" class="btn btn-info btn-outline-warning btn-sm">view donors</a>
+            <a role="button" href="{{path('donor_index')}}" class="btn btn-info btn-sm">view donors</a>
         </div>
     </div>
 </div>

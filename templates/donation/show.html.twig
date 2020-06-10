@@ -28,7 +28,7 @@
 <div class="col-12">
     <div class="row">
         <div class="col-sm-8">
-            <table class="table table-striped table-sm small">
+            <table class="table table-striped table-sm">
                 <tbody>
                     <tr>
                         <th>Donation Id</th>
@@ -44,23 +44,11 @@
                     </tr>
                     <tr>
                         <th>Volume</th>
-                        <td>{{ donation.volume ? donation.volume : 0 }} Litres</td>
+                        <td>{{ donation.volume ? donation.volume|number_format : 0 }} millilitres</td>
                     </tr>
                     <tr>
                         <th>Blood Bags</th>
                         <td>{{ donation.bags ? donation.bags : 0 }}</td>
-                    </tr>
-                    <tr>
-                        <th>HIV/AIDS</th>
-                        <td>{{ donation.hivaids ? 'Positive' : 'Negative' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Malaria</th>
-                        <td>{{ donation.malaria ? 'Positive' : 'Negative' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Corona Virus (covid-19)</th>
-                        <td>{{ donation.covid19 ? 'Positive' : 'Negative' }}</td>
                     </tr>
                     <tr>
                         <th>Status</th>
@@ -69,14 +57,16 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-sm-4">
-            <p class="lead text-secondary">Donor</p>
-            <p><span class="text-secondary text-sm sm small">Full Name:</span> {{ donation.donor.getFullName }}</p>
-            <p><span class="text-secondary text-sm sm small">Gender:</span> {{donation.donor.gender}}</p>
-            <p><span class="text-secondary text-sm sm small">Age:</span> {{donation.donor.getDonorAge ? donation.donor.getDonorAge.y~' years old' : '' }}</p>
-            <p><span class="text-secondary text-sm sm small">Blood Type:</span> {{donation.donor.bloodtype}}</p>
-            <a class="btn btn-secondary btn-sm" role="button" href="{{path('donor_show',{id: donation.donor.id})}}">View Donor's Full Details</a>
-        </div>
+        {% if donation.donor %}
+            <div class="col-sm-4">
+                <p class="lead text-secondary">Donor</p>
+                <p><span class="text-secondary">Full Name:</span> {{ donation.donor.getFullName }}</p>
+                <p><span class="text-secondary">Gender:</span> {{donation.donor.gender}}</p>
+                <p><span class="text-secondary">Age:</span> {{donation.donor.getDonorAge ? donation.donor.getDonorAge.y~' years old' : '' }}</p>
+                <p><span class="text-secondary">Blood Type:</span> {{donation.donor.bloodtype}}</p>
+                <a class="btn btn-secondary btn-sm" role="button" href="{{path('donor_show',{id: donation.donor.id})}}">View Donor's Full Details</a>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -24,14 +24,24 @@ class Donation
     private $date;
 
     /**
-     * @ORM\Column(type="float", length=255, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $volume;
+    private $weight;
 
     /**
-     * @ORM\Column(type="float", length=255, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $bags;
+    private $bloodPressure;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $hrbPercentage;
+
+    /**
+     * @ORM\Column(type="integer", length=255, nullable=true)
+     */
+    private $volume;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Donor", inversedBy="donations")
@@ -44,53 +54,33 @@ class Donation
     private $currentPlace;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $weight;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $ampleBlood;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $wasSick;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $hivaids;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $malaria;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $covid19;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $whatSick;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sicktype", mappedBy="donation")
      */
-    private $sicknesses;
+    private $serology;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="locality")
      */
     private $locality;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $bags;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $consentGiven;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Employee", inversedBy="donationsCollected")
+     */
+    private $collectedBy;
+
     public function __construct()
     {
-        $this->sicknesses = new ArrayCollection();
+        $this->serology = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,38 +100,50 @@ class Donation
         return $this;
     }
 
-    public function getDonor(): ?Donor
+    public function getWeight(): ?int
     {
-        return $this->donor;
+        return $this->weight;
     }
 
-    public function setDonor(?Donor $donor): self
+    public function setWeight(?int $weight): self
     {
-        $this->donor = $donor;
+        $this->weight = $weight;
 
         return $this;
     }
 
-    public function getVolume(): ?string
+    public function getBloodPressure(): ?int
+    {
+        return $this->bloodPressure;
+    }
+
+    public function setBloodPressure(?int $bloodPressure): self
+    {
+        $this->bloodPressure = $bloodPressure;
+
+        return $this;
+    }
+
+    public function getHrbPercentage(): ?int
+    {
+        return $this->hrbPercentage;
+    }
+
+    public function setHrbPercentage(?int $hrbPercentage): self
+    {
+        $this->hrbPercentage = $hrbPercentage;
+
+        return $this;
+    }
+
+    public function getVolume(): ?int
     {
         return $this->volume;
     }
 
-    public function setVolume(string $volume): self
+    public function setVolume(?int $volume): self
     {
         $this->volume = $volume;
-
-        return $this;
-    }
-
-    public function getBags(): ?float
-    {
-        return $this->bags;
-    }
-
-    public function setBags(float $bags): self
-    {
-        $this->bags = $bags;
 
         return $this;
     }
@@ -158,86 +160,38 @@ class Donation
         return $this;
     }
 
-    public function getWeight(): ?float
+    public function getBags(): ?int
     {
-        return $this->weight;
+        return $this->bags;
     }
 
-    public function setWeight(?float $weight): self
+    public function setBags(int $bags): self
     {
-        $this->weight = $weight;
+        $this->bags = $bags;
 
         return $this;
     }
 
-    public function getAmpleBlood(): ?bool
+    public function getConsentGiven(): ?bool
     {
-        return $this->ampleBlood;
+        return $this->consentGiven;
     }
 
-    public function setAmpleBlood(?bool $ampleBlood): self
+    public function setConsentGiven(?bool $consentGiven): self
     {
-        $this->ampleBlood = $ampleBlood;
+        $this->consentGiven = $consentGiven;
 
         return $this;
     }
 
-    public function getWasSick(): ?bool
+    public function getDonor(): ?Donor
     {
-        return $this->wasSick;
+        return $this->donor;
     }
 
-    public function setWasSick(?bool $wasSick): self
+    public function setDonor(?Donor $donor): self
     {
-        $this->wasSick = $wasSick;
-
-        return $this;
-    }
-
-    public function getWhatSick(): ?string
-    {
-        return $this->whatSick;
-    }
-
-    public function setWhatSick(?string $whatSick): self
-    {
-        $this->whatSick = $whatSick;
-
-        return $this;
-    }
-
-    public function getHivaids(): ?bool
-    {
-        return $this->hivaids;
-    }
-
-    public function setHivaids(?bool $hivaids): self
-    {
-        $this->hivaids = $hivaids;
-
-        return $this;
-    }
-
-    public function getMalaria(): ?bool
-    {
-        return $this->malaria;
-    }
-
-    public function setMalaria(?bool $malaria): self
-    {
-        $this->malaria = $malaria;
-
-        return $this;
-    }
-
-    public function getCovid19(): ?bool
-    {
-        return $this->covid19;
-    }
-
-    public function setCovid19(?bool $covid19): self
-    {
-        $this->covid19 = $covid19;
+        $this->donor = $donor;
 
         return $this;
     }
@@ -245,28 +199,28 @@ class Donation
     /**
      * @return Collection|Sicktype[]
      */
-    public function getSicknesses(): Collection
+    public function getSerology(): Collection
     {
-        return $this->sicknesses;
+        return $this->serology;
     }
 
-    public function addSickness(Sicktype $sickness): self
+    public function addSerology(Sicktype $serology): self
     {
-        if (!$this->sicknesses->contains($sickness)) {
-            $this->sicknesses[] = $sickness;
-            $sickness->setDonation($this);
+        if (!$this->serology->contains($serology)) {
+            $this->serology[] = $serology;
+            $serology->setDonation($this);
         }
 
         return $this;
     }
 
-    public function removeSickness(Sicktype $sickness): self
+    public function removeSerology(Sicktype $serology): self
     {
-        if ($this->sicknesses->contains($sickness)) {
-            $this->sicknesses->removeElement($sickness);
+        if ($this->serology->contains($serology)) {
+            $this->serology->removeElement($serology);
             // set the owning side to null (unless already changed)
-            if ($sickness->getDonation() === $this) {
-                $sickness->setDonation(null);
+            if ($serology->getDonation() === $this) {
+                $serology->setDonation(null);
             }
         }
 
@@ -284,4 +238,17 @@ class Donation
 
         return $this;
     }
+
+    public function getCollectedBy(): ?Employee
+    {
+        return $this->collectedBy;
+    }
+
+    public function setCollectedBy(?Employee $collectedBy): self
+    {
+        $this->collectedBy = $collectedBy;
+
+        return $this;
+    }
+
 }

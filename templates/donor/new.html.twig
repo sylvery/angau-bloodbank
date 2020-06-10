@@ -10,7 +10,7 @@
             {
                 'name': 'donor_index',
                 'class': 'primary',
-                'label': 'back to donors',
+                'label': 'back to donors list',
                 'id': donor.id
             }
         ]
@@ -18,8 +18,9 @@
     <div class="col-12">
         {{ form_start(form) }}
         <div class="row">
-            <div class="col-sm-4">{{ form_row(form.firstName) }}</div>
-            <div class="col-sm-4">{{ form_row(form.middleName) }}</div>
+            <div class="col-sm-2">{{ form_row(form.title) }}</div>
+            <div class="col-sm-3">{{ form_row(form.firstName) }}</div>
+            <div class="col-sm-3">{{ form_row(form.middleName) }}</div>
             <div class="col-sm-4">{{ form_row(form.lastName) }}</div>
         </div>
         <div class="row">
@@ -27,6 +28,23 @@
             <div class="col">{{ form_row(form.gender) }}</div>
             <div class="col">{{ form_row(form.maritalStatus) }}</div>
             <div class="col">{{ form_row(form.bloodType) }}</div>
+        </div>
+        <div class="row">
+            <p class="lead col-12">Personal Contact Details</p>
+            <div class="col">{{ form_row(form.homeAddress) }}</div>
+            <div class="col">
+                <div class="col">{{ form_row(form.personalPhoneNumber) }}</div>
+                <div class="col">{{ form_row(form.personalEmail) }}</div>
+            </div>
+        </div>
+        <div class="row">
+            <p class="lead col-12">Business/Work Contact Details</p>
+            <div class="col">{{ form_row(form.businessAddress) }}</div>
+            <div class="col">
+                <div class="col">{{ form_row(form.occupation) }}</div>
+                <div class="col">{{ form_row(form.businessemail) }}</div>
+                <div class="col">{{ form_row(form.businessPhoneNumber) }}</div>
+            </div>
         </div>
         <button class="btn btn-success">Create</button>
         {{ form_end(form) }}

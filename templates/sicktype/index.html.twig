@@ -3,12 +3,21 @@
 {% block title %}Sicktype index{% endblock %}
 
 {% block body %}
-    <h1>Sicktype index</h1>
-
-    <table class="table">
+    {{ include('main/page-title.html.twig', {
+        'pagetitle': 'Illnesses/Ailments Registry',
+        'subtitle': 'A tabuluated list of all sicktype registered in the system',
+        'actions': [
+            {
+                'name': 'sicktype_new',
+                'class': 'success border-warning',
+                'label': 'add new sick type to registry',
+                'id': 1
+            }
+        ]
+    })}}
+    <table class="table table-sm table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>actions</th>
             </tr>
@@ -16,11 +25,9 @@
         <tbody>
         {% for sicktype in sicktypes %}
             <tr>
-                <td>{{ sicktype.id }}</td>
                 <td>{{ sicktype.name }}</td>
                 <td>
-                    <a href="{{ path('sicktype_show', {'id': sicktype.id}) }}">show</a>
-                    <a href="{{ path('sicktype_edit', {'id': sicktype.id}) }}">edit</a>
+                    {% include "misc/buttons-index.html.twig" with { entity: sicktype, entityname: 'sicktype'} %}
                 </td>
             </tr>
         {% else %}
@@ -30,6 +37,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('sicktype_new') }}">Create new</a>
 {% endblock %}

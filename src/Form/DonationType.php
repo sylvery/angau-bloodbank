@@ -72,8 +72,8 @@ class DonationType extends AbstractType
                         'row_attr' => [ 'class' => 'col'],
                         'label_attr' => [ 'class' => 'sr-only']    
                     ])
-                    ->add('locality', CollectionType::class, [
-                        'entry_type' => Location::class,
+                    ->add('locality', EntityType::class, [
+                        'class' => Location::class,
                         'help' => 'Location',
                         'help_attr' => [ 'class' => 'text-muted small'],
                         'attr' => [ 'class' => 'form-control'],

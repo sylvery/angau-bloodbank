@@ -10,14 +10,12 @@
         {% include 'misc/mainNav.html.twig' %}
         <div class="container-fluid">
             <div class="container" id="content-container">
-                <div class="row" id="content-container-row">
-                    {% block body %}{% endblock %}
-                </div>
-                <div class="row" id="footer"></div>
+                {% block body %}{% endblock %}
+            <div class="container" id="footer-container">
+                {% block footer %}{% endblock %}
             </div>
         </div>
-        {% block javascripts %}{% endblock %}
         {% include 'misc/javascripts.html.twig' %}
+        {% block javascripts %}{% endblock %}
     </body>
-    <div>
 </html>

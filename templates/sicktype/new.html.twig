@@ -3,9 +3,17 @@
 {% block title %}New Sicktype{% endblock %}
 
 {% block body %}
-    <h1>Create new Sicktype</h1>
-
+    {{ include('main/page-title.html.twig', {
+        'pagetitle': 'New Type of Sick',
+        'subtitle': 'Add a new sick type to the system by filling and submitting this form',
+        'actions': [
+            {
+                'name': 'sicktype_index',
+                'class': 'primary',
+                'label': 'back to list',
+                'id': sicktype ? sicktype.id: 0,
+            }
+        ]
+    })}}
     {{ include('sicktype/_form.html.twig') }}
-
-    <a href="{{ path('sicktype_index') }}">back to list</a>
 {% endblock %}

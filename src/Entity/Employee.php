@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\AppuserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\EmployeeRepository")
  */
-class Appuser implements UserInterface
+class Employee implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -20,7 +22,7 @@ class Appuser implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $employeeCode;
+    private $uuid;
 
     /**
      * @ORM\Column(type="json")
@@ -33,19 +35,29 @@ class Appuser implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Donation", mappedBy="collectedBy")
+     */
+    private $donationsCollected;
+
+    public function __construct()
+    {
+        $this->donationsCollected = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEmployeeCode(): ?string
+    public function getUuid(): ?string
     {
-        return $this->employeeCode;
+        return $this->uuid;
     }
 
-    public function setEmployeeCode(string $employeeCode): self
+    public function setUuid(string $uuid): self
     {
-        $this->employeeCode = $employeeCode;
+        $this->uuid = $uuid;
 
         return $this;
     }
@@ -57,7 +69,7 @@ class Appuser implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->employeeCode;
+        return (string) $this->uuid;
     }
 
     /**
@@ -109,5 +121,36 @@ class Appuser implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|Donation[]
+     */
+    public function getDonationsCollected(): Collection
+    {
+        return $this->donationsCollected;
+    }
+
+    public function addDonationsCollected(Donation $donationsCollected): self
+    {
+        if (!$this->donationsCollected->contains($donationsCollected)) {
+            $this->donationsCollected[] = $donationsCollected;
+            $donationsCollected->setCollectedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDonationsCollected(Donation $donationsCollected): self
+    {
+        if ($this->donationsCollected->contains($donationsCollected)) {
+            $this->donationsCollected->removeElement($donationsCollected);
+            // set the owning side to null (unless already changed)
+            if ($donationsCollected->getCollectedBy() === $this) {
+                $donationsCollected->setCollectedBy(null);
+            }
+        }
+
+        return $this;
     }
 }

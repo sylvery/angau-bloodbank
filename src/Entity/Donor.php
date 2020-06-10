@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,6 +19,11 @@ class Donor
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -51,6 +58,46 @@ class Donor
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $race;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $homeAddress;    
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $personalEmail;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $personalPhoneNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $businessAddress;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $businessemail;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $businessPhoneNumber;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $occupation;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $bloodType;
 
     /**
@@ -67,6 +114,11 @@ class Donor
     {
         return $this->getFullName();
     }
+
+    // public function getDonorAge()
+    // {
+    //     return date_diff(new DateTime('now', new DateTimeZone('Pacific/Port_Moresby')), $this->getDob())->format('%Y');
+    // }
 
     public function getFullName()
     {
@@ -194,6 +246,114 @@ class Donor
                 $donation->setDonor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getRace(): ?string
+    {
+        return $this->race;
+    }
+
+    public function setRace(string $race): self
+    {
+        $this->race = $race;
+
+        return $this;
+    }
+
+    public function getHomeAddress(): ?string
+    {
+        return $this->homeAddress;
+    }
+
+    public function setHomeAddress(string $homeAddress): self
+    {
+        $this->homeAddress = $homeAddress;
+
+        return $this;
+    }
+
+    public function getPersonalEmail(): ?string
+    {
+        return $this->personalEmail;
+    }
+
+    public function setPersonalEmail(string $personalEmail): self
+    {
+        $this->personalEmail = $personalEmail;
+
+        return $this;
+    }
+
+    public function getPersonalPhoneNumber(): ?int
+    {
+        return $this->personalPhoneNumber;
+    }
+
+    public function setPersonalPhoneNumber(int $personalPhoneNumber): self
+    {
+        $this->personalPhoneNumber = $personalPhoneNumber;
+
+        return $this;
+    }
+
+    public function getBusinessAddress(): ?string
+    {
+        return $this->businessAddress;
+    }
+
+    public function setBusinessAddress(string $businessAddress): self
+    {
+        $this->businessAddress = $businessAddress;
+
+        return $this;
+    }
+
+    public function getBusinessemail(): ?string
+    {
+        return $this->businessemail;
+    }
+
+    public function setBusinessemail(string $businessemail): self
+    {
+        $this->businessemail = $businessemail;
+
+        return $this;
+    }
+
+    public function getBusinessPhoneNumber(): ?int
+    {
+        return $this->businessPhoneNumber;
+    }
+
+    public function setBusinessPhoneNumber(int $businessPhoneNumber): self
+    {
+        $this->businessPhoneNumber = $businessPhoneNumber;
+
+        return $this;
+    }
+
+    public function getOccupation(): ?string
+    {
+        return $this->occupation;
+    }
+
+    public function setOccupation(string $occupation): self
+    {
+        $this->occupation = $occupation;
 
         return $this;
     }

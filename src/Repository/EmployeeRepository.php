@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Appuser;
+use App\Entity\Employee;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -10,16 +10,16 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @method Appuser|null find($id, $lockMode = null, $lockVersion = null)
- * @method Appuser|null findOneBy(array $criteria, array $orderBy = null)
- * @method Appuser[]    findAll()
- * @method Appuser[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Employee|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Employee|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Employee[]    findAll()
+ * @method Employee[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AppuserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class EmployeeRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Appuser::class);
+        parent::__construct($registry, Employee::class);
     }
 
     /**
@@ -37,15 +37,15 @@ class AppuserRepository extends ServiceEntityRepository implements PasswordUpgra
     }
 
     // /**
-    //  * @return Appuser[] Returns an array of Appuser objects
+    //  * @return Employee[] Returns an array of Employee objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
+            ->orderBy('e.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -54,10 +54,10 @@ class AppuserRepository extends ServiceEntityRepository implements PasswordUpgra
     */
 
     /*
-    public function findOneBySomeField($value): ?Appuser
+    public function findOneBySomeField($value): ?Employee
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

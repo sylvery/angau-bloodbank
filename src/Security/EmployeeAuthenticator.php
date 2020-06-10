@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use App\Entity\Appuser;
+use App\Entity\Employee;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class AppuserAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
+class EmployeeAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
 
@@ -46,13 +46,13 @@ class AppuserAuthenticator extends AbstractFormLoginAuthenticator implements Pas
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'employeeCode' => $request->request->get('employeeCode'),
+            'uuid' => $request->request->get('uuid'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['employeeCode']
+            $credentials['uuid']
         );
 
         return $credentials;
@@ -65,11 +65,11 @@ class AppuserAuthenticator extends AbstractFormLoginAuthenticator implements Pas
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(Appuser::class)->findOneBy(['employeeCode' => $credentials['employeeCode']]);
+        $user = $this->entityManager->getRepository(Employee::class)->findOneBy(['uuid' => $credentials['uuid']]);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Employee code could not be found.');
+            throw new CustomUserMessageAuthenticationException('Uuid could not be found.');
         }
 
         return $user;
@@ -94,8 +94,9 @@ class AppuserAuthenticator extends AbstractFormLoginAuthenticator implements Pas
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        // For example : 
+        return new RedirectResponse($this->urlGenerator->generate('home'));
+        // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl()

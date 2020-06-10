@@ -1,12 +1,12 @@
-<div class="col-md-8">
-    <p class="h1 display-4">{{pagetitle ? pagetitle : 'Page Title'}}</p>
+<div class="col-12 d-md-flex justify-content-start">
+    {% for action in actions %}
+        <span class="badge badge-pill badge-{{action.class|default('danger')}} p-2">
+            <a class="text-light" href="{{path(action.name, {id: action.id})}}">{{action.label}}</a>
+        </span>
+    {% endfor %}
 </div>
-<div class="col-md-4 float-right d-md-flex justify-content-end">
-    <div class="btn-group btn-sm align-self-center">
-        {% for action in actions %}
-        <a class="btn btn-sm btn-{{action.class ? action.class : 'default'}}" href="{{path(action.name, {id: action.id})}}">{{action.label}}</a>
-        {% endfor %}
-    </div>
+<div class="col-12">
+    <p class="h1 display-4 text-info">{{pagetitle ? pagetitle : 'Page Title'}}</p>
 </div>
 <div class="col-12">
     <p class="text-info lead">{{subtitle ? subtitle : 'Page Subtitle'}}</p>

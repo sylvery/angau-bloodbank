@@ -39,7 +39,7 @@ class SicktypeController extends AbstractController
             $entityManager->persist($sicktype);
             $entityManager->flush();
 
-            return $this->redirectToRoute('sicktype_index');
+            return $this->redirectToRoute('sicktype_new');
         }
 
         return $this->render('sicktype/new.html.twig', [

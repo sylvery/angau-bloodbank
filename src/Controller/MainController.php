@@ -13,13 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/", name="main_index")
+     * @Route("/", name="home")
      */
     public function index(DonationRepository $donations, DonorRepository $donors)
     {
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
-            'donations' => $donations->findAll(),
+            'donations' => $donations->findBy([],[],10),
             'donors' => $donors->findAll(),
         ]);
     }

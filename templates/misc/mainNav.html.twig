@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <a class="navbar-brand" href="{{path('main_index')}}">BloodBank</a>
+    <a class="navbar-brand" href="{{path('home')}}">BloodBank</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#mobilMenuNav" aria-controls="mobilMenuNav"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,9 +10,6 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{path('appuser_index')}}">Users</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="{{path('donation_index')}}">Donation</a>
             </li>
             <li class="nav-item">
@@ -20,6 +17,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{path('location_index')}}">Locations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{path('sicktype_index')}}">Sick Types</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{path('employee_index')}}">Employees</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
