@@ -6,6 +6,7 @@
                 <a href="{{path('donation_show', {id: donation.id})}}">{{donation.locality}} <span class="text-warning">{{donation.volume}} mL</span></a></p>
             {% endfor %}
             <a role="button" href="{{path('donation_index')}}" class="btn btn-info btn-sm">view donations</a>
+            <a role="button" href="{{path('donation_new')}}" class="btn btn-success btn-sm">add donation</a>
         </div>
         <div class="col-6">
             <p class="lead text-warning">Donor Summary Report</p>

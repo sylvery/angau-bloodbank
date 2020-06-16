@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Donation;
 use App\Entity\Donor;
 use App\Entity\Location;
+use App\Entity\Sicktype;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
@@ -99,33 +101,22 @@ class DonationType extends AbstractType
                         'row_attr' => [ 'class' => 'col'],
                         'label_attr' => [ 'class' => 'sr-only']
                     ])
-                    ->add('ampleBlood', CheckboxType::class, [
-                        'help' => 'Got enough blood to donate?',
-                        'help_attr' => [ 'class' => 'pull-right pt-2 col-11'],
-                        'attr' => [ 'class' => 'form-control col-1'],
-                        'row_attr' => [ 'class' => 'input-group'],
-                        'label_attr' => [ 'class' => 'sr-only'],
-                        'required' => false,
-                    ])
-                    ->add('wasSick', CheckboxType::class, [
-                        'help' => 'Was sick in the past two weeks',
-                        'help_attr' => [ 'class' => 'pull-right pt-2 col-11'],
-                        'attr' => [ 'class' => 'form-control col-1'],
-                        'row_attr' => [ 'class' => 'input-group'],
-                        'label_attr' => [ 'class' => 'sr-only'],
-                        'required' => false,
-                    ])
-                    ->add('sicknesses', CollectionType::class, [
-                        'entry_type' => SicktypeType::class,
-                        'help' => 'What type of sick',
-                        'help_attr' => [ 'class' => 'text-muted small'],
-                        'attr' => [ 'class' => 'form-control'],
-                        'row_attr' => [ 'class' => 'col'],
-                        'label_attr' => [ 'class' => 'sr-only'],
-                        'required' => false,
-                        // 'allow_add' => true,
-                        'by_reference' => false,
-                    ])
+                    // ->add('ampleBlood', CheckboxType::class, [
+                    //     'help' => 'Got enough blood to donate?',
+                    //     'help_attr' => [ 'class' => 'pull-right pt-2 col-11'],
+                    //     'attr' => [ 'class' => 'form-control col-1'],
+                    //     'row_attr' => [ 'class' => 'input-group'],
+                    //     'label_attr' => [ 'class' => 'sr-only'],
+                    //     'required' => false,
+                    // ])
+                    // ->add('wasSick', CheckboxType::class, [
+                    //     'help' => 'Was sick in the past two weeks',
+                    //     'help_attr' => [ 'class' => 'pull-right pt-2 col-11'],
+                    //     'attr' => [ 'class' => 'form-control col-1'],
+                    //     'row_attr' => [ 'class' => 'input-group'],
+                    //     'label_attr' => [ 'class' => 'sr-only'],
+                    //     'required' => false,
+                    // ])
                 ;
             } else if ($donationStatus == 'blood_collection') {
                 $form
@@ -146,31 +137,27 @@ class DonationType extends AbstractType
                 ;
             } else if ($donationStatus == 'blood_tests') {
                 $form
-                    ->add('hivaids', CheckboxType::class, [
-                        'help' => 'HIV/AIDS',
+                    ->add('testresult', TextareaType::class, [
+                        'help' => 'Please enter blood test results data in the text box provided above',
                         'help_attr' => [ 'class' => 'pull-right pt-2'],
-                        'attr' => [ 'class' => 'form-control col-1'],
-                        'row_attr' => [ 'class' => 'input-group'],
+                        'attr' => [ 'class' => 'form-control col-12'],
+                        'row_attr' => [ 'class' => 'col-12'],
                         'required' => false,
                         'label_attr' => [ 'class' => 'sr-only']
                     ])
-                    ->add('malaria', CheckboxType::class, [
-                        'help' => 'Malaria',
-                        'help_attr' => [ 'class' => 'pull-right pt-2'],
-                        'attr' => [ 'class' => 'form-control col-1'],
-                        'row_attr' => [ 'class' => 'input-group'],
+                    ->add('serology', EntityType::class, [
+                        'class' => Sicktype::class,
+                        'help' => 'What type of sick',
+                        'help_attr' => [ 'class' => 'text-muted small'],
+                        'attr' => [ 'class' => 'form-control'],
+                        'row_attr' => [ 'class' => 'col'],
+                        'label_attr' => [ 'class' => 'sr-only'],
                         'required' => false,
-                        'label_attr' => [ 'class' => 'sr-only']
+                        'multiple' => true,
+                        // 'allow_add' => true,
+                        'by_reference' => false,
                     ])
-                    ->add('covid19', CheckboxType::class, [
-                        'help' => 'Corona Virus 2019 (covid19)',
-                        'help_attr' => [ 'class' => 'pull-right pt-2'],
-                        'attr' => [ 'class' => 'form-control col-1'],
-                        'row_attr' => [ 'class' => 'input-group'],
-                        'required' => false,
-                        'label_attr' => [ 'class' => 'sr-only']
-                    ])
-                ;
+                 ;
             }
         });
     }

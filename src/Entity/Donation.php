@@ -54,7 +54,7 @@ class Donation
     private $currentPlace;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sicktype", mappedBy="donation")
+     * @ORM\OneToMany(targetEntity="App\Entity\Sicktype", mappedBy="donation", cascade={"persist","remove"})
      */
     private $serology;
 
@@ -64,7 +64,7 @@ class Donation
     private $locality;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $bags;
 
@@ -77,6 +77,11 @@ class Donation
      * @ORM\ManyToOne(targetEntity="App\Entity\Employee", inversedBy="donationsCollected")
      */
     private $collectedBy;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $testresult;
 
     public function __construct()
     {
@@ -247,6 +252,18 @@ class Donation
     public function setCollectedBy(?Employee $collectedBy): self
     {
         $this->collectedBy = $collectedBy;
+
+        return $this;
+    }
+
+    public function getTestresult(): ?string
+    {
+        return $this->testresult;
+    }
+
+    public function setTestresult(?string $testresult): self
+    {
+        $this->testresult = $testresult;
 
         return $this;
     }

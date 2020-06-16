@@ -81,16 +81,30 @@ class DonationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $workflow = $this->workflow->get($donation);
             if ($workflow->can($donation, 'to_physical_checks')) {
-                // $workflow->apply($donation, 'to_physical_checks');
+                $workflow->apply($donation, 'to_physical_checks');
             } else if ($workflow->can($donation, 'to_blood_collection')) {
                 $workflow->apply($donation, 'to_blood_collection');
             } else if ($workflow->can($donation, 'to_blood_tests')) {
                 $workflow->apply($donation, 'to_blood_tests');
             } else if ($workflow->can($donation, 'to_save_bank')) {
-                if ($form->getData()->getHivaids() == false) {
-                    $workflow->apply($donation, 'to_save_bank');
-                } else {
+                // we'll  be calling serology here to know what types of sicknesses or illnesses are in the blood donated
+                $sendToBin = '';
+                foreach ($form->getData()->getSerology() as $sickness) {
+                    switch ($sickness->getName()) {
+                        case 'malaria':
+                            $sendToBin = true;
+                            break;
+                        case 'hiv/aids':
+                            $sendToBin = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if ( $sendToBin == true) {
                     $workflow->apply($donation, 'to_discard');
+                } else {
+                    $workflow->apply($donation, 'to_save_bank');
                 }
             }
             

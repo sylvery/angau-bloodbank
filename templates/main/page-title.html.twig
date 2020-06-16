@@ -1,7 +1,11 @@
 <div class="col-12 d-md-flex justify-content-start">
     {% for action in actions %}
         <span class="badge badge-pill badge-{{action.class|default('danger')}} p-2">
-            <a class="text-light" href="{{path(action.name, {id: action.id})}}">{{action.label}}</a>
+            {% if action.id is defined %}
+                <a class="text-light" href="{{path(action.name, {id: action.id})}}">{{action.label}}</a>
+            {% else %}
+                <a class="text-light" href="{{path(action.name)}}">{{action.label}}</a>
+            {% endif %}
         </span>
     {% endfor %}
 </div>

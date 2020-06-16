@@ -6,6 +6,7 @@ use App\Entity\Donation;
 use App\Entity\Donor;
 use App\Entity\Employee;
 use App\Entity\Location;
+use App\Entity\Sicktype;
 use App\Repository\DonorRepository;
 use App\Repository\EmployeeRepository;
 use App\Repository\LocationRepository;
@@ -37,6 +38,7 @@ class AppFixtures extends Fixture
         $maritalStatuses = ['single','married','de facto','divorced'];
         $raceArray = ['asian','cacausian','latina','european','african','mongoloid'];
         $bloodTypes = ['O','A','B','AB'];
+        $sickTypes = ['Malaria','Typhoid','Syphilis','HIV/AIDS','Jaundice'];
         $occupationArray = ['self-employed','it office', 'accountant', 'mechanic', 'nurse', 'community leader', 'musician'];
         // create 5 employees ?
         // create 5 locations
@@ -52,8 +54,11 @@ class AppFixtures extends Fixture
                 ->setPassword($this->penc->encodePassword($employee,'password'))
                 ->setUuid($i)
             ;
+            $sickness = new Sicktype();
+            $sickness->setName($sickTypes[$i]);
             $manager->persist($location);
             $manager->persist($employee);
+            $manager->persist($sickness);
             $manager->flush();
         }
         // create 25 donors
@@ -80,22 +85,22 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
         // create 100 donations
-        for ($i=0; $i < 100; $i++) { 
-            $donation = new Donation();
-            $donation
-                ->setDate(date_sub(new DateTime('now', new DateTimeZone('Pacific/Port_Moresby')), new DateInterval('P'.rand(1,84).'D')))
-                ->setWeight(rand(40,120))
-                ->setBloodPressure(rand(70,130))
-                ->setHrbPercentage(rand(0,100))
-                ->setVolume(rand(0,10000))
-                ->setDonor($this->donorRepository->find(rand(326, 350)))
-                ->setLocality($this->locationRepository->find(rand(67,71)))
-                ->setCollectedBy($this->employeeRepository->findOneBy(['uuid' => rand(0,4)]))
-                ->setBags(rand(1,5))
-                ->setConsentGiven(rand(0,1))
-            ;
-            $manager->persist($donation);
-        }
+        // for ($i=0; $i < 100; $i++) { 
+        //     $donation = new Donation();
+        //     $donation
+        //         ->setDate(date_sub(new DateTime('now', new DateTimeZone('Pacific/Port_Moresby')), new DateInterval('P'.rand(1,84).'D')))
+        //         ->setWeight(rand(40,120))
+        //         ->setBloodPressure(rand(70,130))
+        //         ->setHrbPercentage(rand(0,100))
+        //         ->setVolume(rand(0,10000))
+        //         ->setDonor($this->donorRepository->find(rand(326, 350)))
+        //         ->setLocality($this->locationRepository->find(rand(67,71)))
+        //         ->setCollectedBy($this->employeeRepository->findOneBy(['uuid' => rand(0,4)]))
+        //         ->setBags(rand(1,5))
+        //         ->setConsentGiven(rand(0,1))
+        //     ;
+        //     $manager->persist($donation);
+        // }
 
         $manager->flush();
     }

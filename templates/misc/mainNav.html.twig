@@ -25,15 +25,11 @@
                 <a class="nav-link" href="{{path('employee_index')}}">Employees</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-1" type="text" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
         <nav class="nav justify-content-end">
             {% if app %}
-            <a class="btn btn-danger btn-sm nav-link" role="button" href="{{path('app_login')}}">Login</a>
+            <a class="btn btn-danger nav-link" role="button" href="{{path('app_login')}}">Login</a>
             {% else %}
-            <a class="btn btn-danger btn-sm nav-link" role="button" href="{{path('app_logout')}}">Sign Out</a>
+            <a class="btn btn-danger nav-link" role="button" href="{{path('app_logout')}}">Sign Out</a>
             {% endif %}
         </nav>
     </div>
