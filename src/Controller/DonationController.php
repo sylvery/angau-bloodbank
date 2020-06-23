@@ -8,6 +8,7 @@ use App\Form\DonationType;
 use App\Repository\DonationRepository;
 use DateTime;
 use DateTimeZone;
+use Doctrine\ORM\Id\UuidGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -93,8 +94,8 @@ class DonationController extends AbstractController
                 $now = new DateTime('now', new DateTimeZone('Pacific/Port_Moresby'));
                 foreach ($bags as $bag) {
                     // var_dump($bag); exit;
-                    // $newBag = new Bloodbag($bag);
-                    $bag->setBagnumber($donation->getDonor()->getNameInitials().'_'.$bag->getId().'_'.$now->getTimestamp())
+                    $uuid = random_int(0,16);
+                    $bag->setBagnumber($donation->getDonor()->getNameInitials().'_'.$donation->getId().$uuid.'_'.$now->getTimestamp())
                         ->setVolume($bag->getVolume())
                         ->setDonation($donation);
                     $this->getDoctrine()->getManager()->persist($bag);
