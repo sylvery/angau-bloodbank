@@ -26,6 +26,11 @@ class Sicktype
      */
     private $donation;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Bloodtest", inversedBy="sickfound")
+     */
+    private $bloodtest;
+
     public function __toString()
     {
         return $this->getName();
@@ -56,6 +61,18 @@ class Sicktype
     public function setDonation(?Donation $donation): self
     {
         $this->donation = $donation;
+
+        return $this;
+    }
+
+    public function getBloodtest(): ?Bloodtest
+    {
+        return $this->bloodtest;
+    }
+
+    public function setBloodtest(?Bloodtest $bloodtest): self
+    {
+        $this->bloodtest = $bloodtest;
 
         return $this;
     }
