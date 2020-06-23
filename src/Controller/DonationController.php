@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Bloodbag;
 use App\Entity\Donation;
 use App\Form\DonationType;
 use App\Repository\DonationRepository;
+use DateTime;
+use DateTimeZone;
+use Doctrine\ORM\Id\UuidGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -85,6 +89,18 @@ class DonationController extends AbstractController
             } else if ($workflow->can($donation, 'to_blood_collection')) {
                 $workflow->apply($donation, 'to_blood_collection');
             } else if ($workflow->can($donation, 'to_blood_tests')) {
+                $bags = $form->getData()->getBloodbags();
+                // var_export($bags); exit;
+                $now = new DateTime('now', new DateTimeZone('Pacific/Port_Moresby'));
+                foreach ($bags as $bag) {
+                    // var_dump($bag); exit;
+                    $uuid = random_int(0,16);
+                    $bag->setBagnumber($donation->getDonor()->getNameInitials().'_'.$donation->getId().$uuid.'_'.$now->getTimestamp())
+                        ->setVolume($bag->getVolume())
+                        ->setDonation($donation);
+                    $this->getDoctrine()->getManager()->persist($bag);
+                    // $this->getDoctrine()->getManager()->flush();
+                }
                 $workflow->apply($donation, 'to_blood_tests');
             } else if ($workflow->can($donation, 'to_save_bank')) {
                 // we'll  be calling serology here to know what types of sicknesses or illnesses are in the blood donated

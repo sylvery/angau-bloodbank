@@ -1,4 +1,12 @@
 {{ form_start(form) }}
-    {{ form_widget(form, {attr: {class: 'row'}}) }}
+    {% if donation.currentPlace is same as('blood_collection') %}
+        <h3>Blood Bags</h3>
+        {{form_row(form.bloodbags)}}
+        {% for bag in form.bloodbags %}
+            {{form_row(bag)}}
+        {% endfor %}
+    {% else %}
+        {{ form_widget(form, {attr: {class: 'row'}}) }}
+    {% endif %}
     <button class="btn btn-success btn-block">{{ button_label|default('save') }}</button>
 {{ form_end(form) }}

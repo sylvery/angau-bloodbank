@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SicktypeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BloodbagRepository")
  */
-class Sicktype
+class Bloodbag
 {
     /**
      * @ORM\Id()
@@ -19,36 +21,53 @@ class Sicktype
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $bagnumber;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Donation", inversedBy="serology")
+     * @ORM\Column(type="integer")
+     */
+    private $volume;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Donation", inversedBy="bloodbags")
      */
     private $donation;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Bloodtest", inversedBy="sickfound")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Bloodtest", inversedBy="bloodbag")
      */
     private $bloodtest;
-
-    public function __toString()
-    {
-        return $this->getName();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function __toString()
     {
-        return $this->name;
+        return $this->getId().$this->getBagNumber();
     }
 
-    public function setName(string $name): self
+    public function getBagnumber(): ?string
     {
-        $this->name = $name;
+        return $this->bagnumber;
+    }
+
+    public function setBagnumber(string $bagnumber): self
+    {
+        $this->bagnumber = $bagnumber;
+
+        return $this;
+    }
+
+    public function getVolume(): ?int
+    {
+        return $this->volume;
+    }
+
+    public function setVolume(int $volume): self
+    {
+        $this->volume = $volume;
 
         return $this;
     }

@@ -120,19 +120,18 @@ class DonationType extends AbstractType
                 ;
             } else if ($donationStatus == 'blood_collection') {
                 $form
-                    ->add('volume', NumberType::class, [
-                        'help' => 'Volume (Litres)',
-                        'help_attr' => [ 'class' => 'text-muted small'],
-                        'attr' => [ 'class' => 'form-control'],
-                        'row_attr' => [ 'class' => 'col'],
-                        'label_attr' => [ 'class' => 'sr-only']
-                    ])
-                    ->add('bags', IntegerType::class, [
-                        'help' => 'Number of blood bags',
-                        'help_attr' => [ 'class' => 'text-muted small'],
-                        'attr' => [ 'class' => 'form-control'],
-                        'row_attr' => [ 'class' => 'col'],
-                        'label_attr' => [ 'class' => 'sr-only']
+                    // ->add('volume', NumberType::class, [
+                    //     'help' => 'Volume (Litres)',
+                    //     'help_attr' => [ 'class' => 'text-muted small'],
+                    //     'attr' => [ 'class' => 'form-control'],
+                    //     'row_attr' => [ 'class' => 'col'],
+                    //     'label_attr' => [ 'class' => 'sr-only']
+                    // ])
+                    ->add('bloodbags', CollectionType::class, [
+                        'entry_type' => BloodbagType::class,
+                        'label_attr' => [ 'class' => 'sr-only'],
+                        'entry_options' => ['label' => false],
+                        'allow_add' => true,
                     ])
                 ;
             } else if ($donationStatus == 'blood_tests') {
