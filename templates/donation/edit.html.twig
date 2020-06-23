@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Donation{% endblock %}
+{% block title %}Update Donation {{ parent() }}{% endblock %}
 
 {% block body %}
     {{ include('main/page-title.html.twig', {
-        'pagetitle': 'Update Donation',
-        'subtitle': 'Update this donation by filling out the form below',
+        'pagetitle': 'Update Donation Details',
+        'subtitle': 'Update the details for this donation as it passess through the checks before getting admitted to the blood bank by filling out the form below',
         'actions': [
             {
                 'name': 'donation_index',
@@ -25,19 +25,22 @@
             }
         ]
     })}}
-    <div class="col-sm">
-        {{ include('donation/_form.html.twig', {'button_label': 'Update'}) }}
-    </div>
-    <div class="col-sm">
-        {{ include('main/workflow-status.html.twig', {currentPlace: donation.currentPlace})}}
-        <div class="card text-white bg-info">
-          <div class="card-body">
-            <h4 class="card-title lead">{{donation.donor ? donation.donor.fullname : 'Donor Name'}}</h4>
-            <div class="card-text">
-                <p><span class="text-dark small">Age:</span> {{donation.donor ? donation.donor.getDonorAge.y~' years old' : '' }}</p>
-                <p><span class="text-dark small">Blood Type: </span>{{donation.donor ? donation.donor.bloodtype : ''}}</p>
+    <div class="row">
+        <div class="col-6">
+            {{ include('donation/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+        <div class="col-6">
+            {# include('main/workflow-status.html.twig', {currentPlace: donation.currentPlace})#}
+            <div class="card text-white bg-secondary">
+            <div class="card-body">
+                <h4 class="card-title lead">Donor Details</h4>
+                <div class="card-text">
+                    <p class="text-capitalize">{{donation.donor ? donation.donor.title ~ ' ' ~ donation.donor.fullname : 'Donor Name'}}</p>
+                    <p><span class="text-dark small">Age:</span> {{donation.donor ? donation.donor.getDonorAge.y~' years old' : '' }}</p>
+                    <p><span class="text-dark small">Blood Type: </span>{{donation.donor ? donation.donor.bloodtype : ''}}</p>
+                </div>
             </div>
-          </div>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -3,63 +3,60 @@
 {% block title %}Donation Details {{ parent() }}{% endblock %}
 
 {% block body %}
-{{ include('main/page-title.html.twig', {
-    'pagetitle': 'Donation Details',
-    'subtitle': 'Below are details concerning this particular donation',
-    'actions': [
-        {
-            'name': 'donation_index',
-            'class': 'primary',
-            'label': 'donations registry',
-            'id': donation.id
-        },{
-            'name': 'donation_new',
-            'class': 'success',
-            'label': 'new donation',
-            'id': donation.id
-        },{
-            'name': 'donation_edit',
-            'class': 'warning',
-            'label': 'edit',
-            'id': donation.id
-        }
-    ]
-})}}
-<div class="col-12">
+    {{ include('main/page-title.html.twig', {
+        'pagetitle': 'Donation Details',
+        'subtitle': 'Below are details concerning this particular donation',
+        'actions': [
+            {
+                'name': 'donation_index',
+                'class': 'primary',
+                'label': 'donations registry',
+                'id': donation.id
+            },{
+                'name': 'donation_new',
+                'class': 'success',
+                'label': 'new donation',
+                'id': donation.id
+            },{
+                'name': 'donation_edit',
+                'class': 'warning',
+                'label': 'edit',
+                'id': donation.id
+            }
+        ]
+    })}}
     <div class="row">
         <div class="col-sm-8">
-            <table class="table table-striped table-sm">
-                <tbody>
-                    <tr>
-                        <th>Donation Id</th>
-                        <td>{{ donation.id }}</td>
-                    </tr>
-                    <tr>
-                        <th>Date</th>
-                        <td>{{ donation.date ? donation.date|date('D F j, Y @h:m') : '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Location</th>
-                        <td>{{ donation.locality }}</td>
-                    </tr>
-                    <tr>
-                        <th>Volume</th>
-                        <td>{{ donation.volume ? donation.volume|number_format : 0 }} millilitres</td>
-                    </tr>
-                    <tr>
-                        <th>Blood Bags</th>
-                        <td>{{ donation.bags ? donation.bags : 0 }}</td>
-                    </tr>
-                    <tr>
-                        <th>Status</th>
-                        <td>{{ donation.currentPlace }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <ul class="list-group mb-2 pb-1">
+                <li class="list-group-item bg-secondary"><span class="text-dark">Donation Id: </span>{{ donation.id }}</li>
+                <li class="list-group-item bg-secondary"><span class="text-dark">Date: </span>{{ donation.date ? donation.date|date('D F j, Y @h:m') : '' }}</li>
+                <li class="list-group-item bg-secondary"><span class="text-dark">Location: </span>{{ donation.locality }}</li>
+                <li class="list-group-item bg-secondary"><span class="text-dark">Volume: </span>{{ donation.volume ? donation.volume|number_format : 0 }} millilitres</li>
+                <li class="list-group-item bg-secondary"><span class="text-dark">Blood Bags: </span>{{ donation.bags ? donation.bags : 0 }}</li>
+                {% if donation.testresult %}
+                    <li class="list-group-item bg-secondary text-warning"><span class="text-light">Blood test result: </span>{{ donation.testresult }} These sicknesses were found in the blood:
+                        <p>
+                        {% for sickness in donation.serology %}
+                            {{ sickness }}, 
+                        {% endfor %}
+                        </p>
+                    </li>
+                {% endif %}
+                <li class="list-group-item bg-secondary"><span class="text-dark">Status: </span>{{ donation.currentPlace }}</li>
+            </ul>
+            <div class="text-secondary small">
+                <p>There are six (6) states that a donation goes through:</p>
+                <p class="{{ donation.currentPlace == 'physical_checks' ? 'text-warning' }}">1. physical_checks - is when the patient is going through physical checks</p>
+                <p class="{{ donation.currentPlace == 'blood_collection' ? 'text-warning' }}">2. blood_collection - is where the donor's blood is collected</p>
+                <p class="{{ donation.currentPlace == 'blood_tests' ? 'text-warning' }}">3. blood_tests - is where the blood is checked for anomolies</p>
+                <p class="{{ donation.currentPlace == 'save_bank' ? 'text-warning' }}">4.1 save_bank - the blood donated is saved to the bank</p>
+                <p class="{{ donation.currentPlace == 'discard' ? 'text-warning' }}">4.2 discard - the blood donated is marked for disposal</p>
+                <p class="{{ donation.currentPlace == 'terminate' ? 'text-warning' }}">5. terminate - the blood has been disposed</p>
+            </div>
         </div>
         {% if donation.donor %}
             <div class="col-sm-4">
-                <p class="lead text-secondary">Donor</p>
+                <p class="lead text-warning">Donor</p>
                 <p><span class="text-secondary">Full Name:</span> {{ donation.donor.getFullName }}</p>
                 <p><span class="text-secondary">Gender:</span> {{donation.donor.gender}}</p>
                 <p><span class="text-secondary">Age:</span> {{donation.donor.getDonorAge ? donation.donor.getDonorAge.y~' years old' : '' }}</p>
@@ -68,5 +65,4 @@
             </div>
         {% endif %}
     </div>
-</div>
 {% endblock %}

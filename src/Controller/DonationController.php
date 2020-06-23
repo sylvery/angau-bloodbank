@@ -51,7 +51,7 @@ class DonationController extends AbstractController
             $entityManager->persist($donation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('donation_index');
+            return $this->redirectToRoute('donation_show', ['id' => $donation->getId()]);
         }
 
         return $this->render('donation/new.html.twig', [
@@ -91,10 +91,11 @@ class DonationController extends AbstractController
                 $sendToBin = '';
                 foreach ($form->getData()->getSerology() as $sickness) {
                     switch ($sickness->getName()) {
-                        case 'malaria':
-                            $sendToBin = true;
-                            break;
-                        case 'hiv/aids':
+                        case 'Malaria':
+                        case 'Typhoid':
+                        case 'Syphilis':
+                        case 'HIV/AIDS':
+                        case 'Jaundice':
                             $sendToBin = true;
                             break;
                         default:

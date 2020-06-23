@@ -19,7 +19,7 @@ class MainController extends AbstractController
     {
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
-            'donations' => $donations->findBy([],[],10),
+            'donations' => $donations->findBy(['currentPlace' => 'save_bank'],[],10),
             'donors' => $donors->findBy([],[],10),
         ]);
     }
