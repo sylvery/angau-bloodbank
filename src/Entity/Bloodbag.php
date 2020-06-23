@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,6 +36,11 @@ class Bloodbag
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->getId().$this->getBagNumber();
     }
 
     public function getBagnumber(): ?string

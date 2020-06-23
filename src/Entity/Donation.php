@@ -84,7 +84,7 @@ class Donation
     private $testresult;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Bloodbag", mappedBy="donation")
+     * @ORM\OneToMany(targetEntity="App\Entity\Bloodbag", mappedBy="donation", cascade={"persist", "remove"})
      */
     private $bloodbags;
 

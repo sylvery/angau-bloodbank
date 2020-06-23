@@ -115,10 +115,10 @@ class Donor
         return $this->getFullName();
     }
 
-    // public function getDonorAge()
-    // {
-    //     return date_diff(new DateTime('now', new DateTimeZone('Pacific/Port_Moresby')), $this->getDob())->format('%Y');
-    // }
+    public function getNameInitials()
+    {
+        return substr($this->getFirstName(),0,1).$this->getLastName();
+    }
 
     public function getFullName()
     {
