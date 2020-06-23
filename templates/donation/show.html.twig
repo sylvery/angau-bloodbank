@@ -31,7 +31,7 @@
                 <li class="list-group-item bg-secondary"><span class="text-dark">Donation Id: </span>{{ donation.id }}</li>
                 <li class="list-group-item bg-secondary"><span class="text-dark">Date: </span>{{ donation.date ? donation.date|date('D F j, Y @h:m') : '' }}</li>
                 <li class="list-group-item bg-secondary"><span class="text-dark">Location: </span>{{ donation.locality }}</li>
-                <li class="list-group-item bg-secondary"><span class="text-dark">Volume: </span>{{ donation.volume ? donation.volume|number_format : 0 }} millilitres</li>
+                <li class="list-group-item bg-secondary"><span class="text-dark">Volume: </span>{{ donation.volume ? donation.volume|number_format : 0 }} mL</li>
                 <li class="list-group-item bg-secondary"><span class="text-dark">Blood Bags: </span><a class="btn btn-default text-dark" href="{{path('bloodbag_index')}}">{{ donation.bloodbags ? donation.bloodbags.count : 0 }}</a></li>
                 {% if donation.testresult %}
                     <li class="list-group-item bg-secondary text-warning"><span class="text-light">Blood test result: </span>{{ donation.testresult }} These sicknesses were found in the blood:
