@@ -83,9 +83,15 @@ class Donation
      */
     private $testresult;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Bloodbag", mappedBy="donation")
+     */
+    private $bloodbags;
+
     public function __construct()
     {
         $this->serology = new ArrayCollection();
+        $this->bloodbags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -264,6 +270,37 @@ class Donation
     public function setTestresult(?string $testresult): self
     {
         $this->testresult = $testresult;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Bloodbag[]
+     */
+    public function getBloodbags(): Collection
+    {
+        return $this->bloodbags;
+    }
+
+    public function addBloodbag(Bloodbag $bloodbag): self
+    {
+        if (!$this->bloodbags->contains($bloodbag)) {
+            $this->bloodbags[] = $bloodbag;
+            $bloodbag->setDonation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBloodbag(Bloodbag $bloodbag): self
+    {
+        if ($this->bloodbags->contains($bloodbag)) {
+            $this->bloodbags->removeElement($bloodbag);
+            // set the owning side to null (unless already changed)
+            if ($bloodbag->getDonation() === $this) {
+                $bloodbag->setDonation(null);
+            }
+        }
 
         return $this;
     }
