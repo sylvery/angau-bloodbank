@@ -1,30 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bloodbag{% endblock %}
+{% block title %}Bloodbag Details {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Bloodbag</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ bloodbag.id }}</td>
-            </tr>
-            <tr>
-                <th>Bagnumber</th>
-                <td>{{ bloodbag.bagnumber }}</td>
-            </tr>
-            <tr>
-                <th>Volume</th>
-                <td>{{ bloodbag.volume }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('bloodbag_index') }}">back to list</a>
-
-    <a href="{{ path('bloodbag_edit', {'id': bloodbag.id}) }}">edit</a>
-
-    {{ include('bloodbag/_delete_form.html.twig') }}
+{{ include('main/page-title.html.twig', {
+    'pagetitle': 'Blood Bag Details',
+    'subtitle': 'Donation, Donor and blood test results concerning this particular blood bag',
+    'actions': [
+        {
+            'name': 'bloodtest_index',
+            'class': 'primary border-warning',
+            'label': 'back to bloodbags list',
+        },
+    ]
+})}}
+<div class="row">
+    <div class="col">
+        <table class="table table-sm table-striped">
+            <tbody>
+                <tr>
+                    <th>Bag ID Number</th>
+                    <td>{{ bloodbag.bagnumber }}</td>
+                </tr>
+                <tr>
+                    <th>Volume</th>
+                    <td>{{ bloodbag.volume|number_format }} mL</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col">
+        <p class="lead">Donation & Donor Details</p>
+        {% set donation = bloodbag.donation %}
+        <p>The blood was donated on {{ donation.date|date('F j Y')}} by {{ donation.donor}} who at the time of the donation weighed {{ donation.weight }} kg. The blood was collected at {{ donation.locality }}.
+        </p>
+    </div>
+    {% if bloodbag.bloodtest is defined and bloodbag.bloodtest is not same as(null) %}
+    {% set bloodtest = bloodbag.bloodtest %}
+    <div class="col-12" id="bloodtest">
+        <p class="lead">Blood Test Results</p>
+        <p>{{bloodtest}}</p>
+        <p><a class="btn btn-info" role="button" href="{{path('bloodtest_show', {'id': bloodtest.id})}}">view blood test report</a></p>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

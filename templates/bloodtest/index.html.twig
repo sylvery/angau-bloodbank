@@ -1,37 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bloodtest index{% endblock %}
+{% block title %}Bloodtest index {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Bloodtest index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date</th>
-                <th>Comment</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for bloodtest in bloodtests %}
-            <tr>
-                <td>{{ bloodtest.id }}</td>
-                <td>{{ bloodtest.date ? bloodtest.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ bloodtest.comment }}</td>
-                <td>
-                    <a href="{{ path('bloodtest_show', {'id': bloodtest.id}) }}">show</a>
-                    <a href="{{ path('bloodtest_edit', {'id': bloodtest.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('bloodtest_new') }}">Create new</a>
+{{ include('main/page-title.html.twig', {
+    'pagetitle': 'Blood Tests',
+    'subtitle': 'A tabuluated list of all blood bags tested',
+    'actions': [
+        {
+            'name': 'bloodtest_new',
+            'class': 'success border-warning',
+            'label': 'create new blood test',
+        }
+    ]
+})}}
+    <div class="row">
+        <div class="col">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Comment</th>
+                        <th>Blood Bags</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for bloodtest in bloodtests %}
+                    <tr>
+                        <td>{{ bloodtest.date ? bloodtest.date|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ bloodtest.comment }}</td>
+                        <td>{{ bloodtest.bloodbag.count }}</td>
+                        <td class="btn-group">
+                            <a class="btn btn-sm btn-info" href="{{ path('bloodtest_show', {'id': bloodtest.id}) }}">show</a>
+                            <a class="btn btn-sm btn-warning" href="{{ path('bloodtest_edit', {'id': bloodtest.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

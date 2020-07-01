@@ -11,9 +11,9 @@
         {% endfor %}
     </div>
     <div class="col-12">
-        <p class="h1 display-4 text-info">{{pagetitle ? pagetitle : 'Page Title'}}</p>
+        <p class="h1 display-4 text-info">{{pagetitle is defined ? pagetitle : 'Page Title'}}</p>
     </div>
     <div class="col-12">
-        <p class="text-light lead">{{subtitle ? subtitle : 'Page Subtitle'}}</p>
+        <p class="text-light lead">{{subtitle is defined ? subtitle}}</p>
     </div>
 </div>

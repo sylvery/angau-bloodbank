@@ -1,30 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bloodtest{% endblock %}
+{% block title %}Bloodtest Results {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Bloodtest</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ bloodtest.id }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ bloodtest.date ? bloodtest.date|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Comment</th>
-                <td>{{ bloodtest.comment }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('bloodtest_index') }}">back to list</a>
-
-    <a href="{{ path('bloodtest_edit', {'id': bloodtest.id}) }}">edit</a>
-
-    {{ include('bloodtest/_delete_form.html.twig') }}
+{{ include('main/page-title.html.twig', {
+    'pagetitle': 'Blood Test Results',
+    'subtitle': 'Test results of these particular blood bags tested',
+    'actions': [
+        {
+            'name': 'bloodtest_edit',
+            'id': bloodtest.id,
+            'class': 'warning border-success',
+            'label': 'update blood test',
+        },
+        {
+            'name': 'bloodtest_new',
+            'class': 'success border-warning',
+            'label': 'create new blood test',
+        },
+        {
+            'name': 'bloodtest_index',
+            'class': 'primary border-warning',
+            'label': 'back to list',
+        },
+    ]
+})}}
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ bloodtest.id }}</td>
+                </tr>
+                <tr>
+                    <th>Date</th>
+                    <td>{{ bloodtest.date ? bloodtest.date|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Comment</th>
+                    <td>{{ bloodtest.comment }}</td>
+                </tr>
+                <tr>
+                    <th>Blood bags</th>
+                    <td>
+                    {% for bag in bloodtest.bloodbag %}
+                        <a href="{{path('bloodbag_show', {'id': bag.id})}}">{{ bag.bagnumber }}</a>
+                    {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

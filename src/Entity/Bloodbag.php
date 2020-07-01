@@ -38,6 +38,11 @@ class Bloodbag
      */
     private $bloodtest;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $checked;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +97,18 @@ class Bloodbag
     public function setBloodtest(?Bloodtest $bloodtest): self
     {
         $this->bloodtest = $bloodtest;
+
+        return $this;
+    }
+
+    public function getChecked(): ?bool
+    {
+        return $this->checked;
+    }
+
+    public function setChecked(?bool $checked): self
+    {
+        $this->checked = $checked;
 
         return $this;
     }
