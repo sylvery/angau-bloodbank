@@ -2,20 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Bloodbag;
+use App\Entity\Bloodtest;
 use App\Entity\Donation;
 use App\Form\DonationType;
 use App\Repository\DonationRepository;
 use DateTime;
 use DateTimeZone;
-use Doctrine\ORM\Id\UuidGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
-use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
-use Symfony\Component\Workflow\Exception\LogicException;
 
 /**
  * @Route("/donation")
@@ -104,25 +101,29 @@ class DonationController extends AbstractController
                 $workflow->apply($donation, 'to_blood_tests');
             } else if ($workflow->can($donation, 'to_save_bank')) {
                 // we'll  be calling serology here to know what types of sicknesses or illnesses are in the blood donated
+                $serology = $form->getData()->getSerology();
+                $btr = new Bloodtest();
+                $btr
+                    ->setComment($form->getData()->getTestResult())
+                    ->setDate(new DateTime('now', new DateTimeZone('Pacific/Port_Moresby')))
+                ;
+                foreach ($donation->getBloodbags() as $bag) {
+                    $bag->setChecked(true);
+                    $btr->addBloodbag($bag);
+                }
+                foreach ($serology as $sick) {
+                    $btr->addSickfound($sick);
+                }
                 $sendToBin = '';
-                foreach ($form->getData()->getSerology() as $sickness) {
-                    switch ($sickness->getName()) {
-                        case 'Malaria':
-                        case 'Typhoid':
-                        case 'Syphilis':
-                        case 'HIV/AIDS':
-                        case 'Jaundice':
-                            $sendToBin = true;
-                            break;
-                        default:
-                            break;
-                    }
+                foreach ($serology as $sickness) {
+                    if ($sickness) $sendToBin = true;
                 }
                 if ( $sendToBin == true) {
                     $workflow->apply($donation, 'to_discard');
                 } else {
                     $workflow->apply($donation, 'to_save_bank');
                 }
+                $this->getDoctrine()->getManager()->persist($btr);
             }
             
             $this->getDoctrine()->getManager()->flush();

@@ -1,37 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bloodbag index{% endblock %}
+{% block title %}Bloodbags {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Bloodbag index</h1>
+{{ include('main/page-title.html.twig', {
+    'pagetitle': 'Blood bags',
+    'subtitle': 'A tabuluated list of all blood bags collected during blood donation. Blood bags are only created during the blood collection process in donation.',
+    'actions': [
+        {
+            'name': 'donation_index',
+            'class': 'success border-warning',
+            'label': 'go to donations',
+        }
+    ]
+})}}
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Bag ID Number</th>
+                    <th>Volume</th>
+                    <th>Checked</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for bloodbag in bloodbags %}
+                <tr>
+                    <td>{{ bloodbag.bagnumber }}</td>
+                    <td>{{ bloodbag.volume }}</td>
+                    <td>{{ bloodbag.checked ? 'checked' : 'not yet' }}</td>
+                    <td class="btn-group">
+                        <a class="btn btn-sm btn-info" role="button" href="{{ path('bloodbag_show', {'id': bloodbag.id}) }}">show</a>
+                        {# <a class="btn btn-sm btn-warning" role="button" href="{{ path('bloodbag_edit', {'id': bloodbag.id}) }}">edit</a> #}
+                        {# {% include "bloodbag/_delete_form.html.twig" %} #}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Bagnumber</th>
-                <th>Volume</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for bloodbag in bloodbags %}
-            <tr>
-                <td>{{ bloodbag.id }}</td>
-                <td>{{ bloodbag.bagnumber }}</td>
-                <td>{{ bloodbag.volume }}</td>
-                <td>
-                    <a href="{{ path('bloodbag_show', {'id': bloodbag.id}) }}">show</a>
-                    <a href="{{ path('bloodbag_edit', {'id': bloodbag.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('bloodbag_new') }}">Create new</a>
 {% endblock %}

@@ -1,13 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Bloodbag{% endblock %}
+{% block title %}Update Bloodbag Details {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Bloodbag</h1>
+{{ include('main/page-title.html.twig', {
+    'pagetitle': 'Update Blood Bag Details',
+    'actions': [
+        {
+            'name': 'bloodbag',
+            'id': bloodbag.id,
+            'class': 'warning',
+            'label': 'cancel update',
+        },
+        {
+            'name': 'bloodbag',
+            'class': 'info',
+            'label': 'back to list',
+        },
+    ]
+})}}
+<div class="row">
+    <div class="col">
+        {{ include('bloodbag/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+</div>
 
-    {{ include('bloodbag/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('bloodbag_index') }}">back to list</a>
-
-    {{ include('bloodbag/_delete_form.html.twig') }}
 {% endblock %}

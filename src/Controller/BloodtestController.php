@@ -35,6 +35,20 @@ class BloodtestController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $bags = $form->getData()->getBloodbag();
+            $sick = $form->getData()->getSickfound();
+            foreach ($bags as $bag) {
+                $bag
+                    ->setChecked(1)
+                    ->setBloodtest($bloodtest)
+                ;
+            }
+            if ($sick) {
+                // bloodbag gets marked and goes to disposal
+                var_dump($sick->getName()); exit;
+            } else {
+                // bloodbag gets marked and goes to bank for storage
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($bloodtest);
             $entityManager->flush();
@@ -67,6 +81,19 @@ class BloodtestController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $bags = $form->getData()->getBloodbag();
+            $sick = $form->getData()->getSickfound();
+            foreach ($bags as $bag) {
+                $bag
+                    ->setChecked(1)
+                    ->setBloodtest($bloodtest)
+                ;
+            }
+            if ($sick) {
+                // bloodbag gets marked and goes to disposal
+            } else {
+                // bloodbag gets marked and goes to bank for storage
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('bloodtest_index');

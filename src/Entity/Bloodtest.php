@@ -34,7 +34,7 @@ class Bloodtest
     private $sickfound;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Bloodbag", mappedBy="bloodtest")
+     * @ORM\OneToMany(targetEntity="App\Entity\Bloodbag", mappedBy="bloodtest", cascade={"persist"})
      */
     private $bloodbag;
 
@@ -42,6 +42,11 @@ class Bloodtest
     {
         $this->sickfound = new ArrayCollection();
         $this->bloodbag = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getComment();
     }
 
     public function getId(): ?int
